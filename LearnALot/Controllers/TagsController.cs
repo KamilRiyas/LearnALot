@@ -10,55 +10,55 @@ namespace LearnALot.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ChaptersController : ControllerBase
+    public class TagsController : ControllerBase
     {
         private readonly LearnDBContext _context;
 
-        public ChaptersController(LearnDBContext context)
+        public TagsController(LearnDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Chapters
+        // GET: api/Tags
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Chapter>>> GetChapters()
+        public async Task<ActionResult<IEnumerable<Tag>>> GetTags()
         {
-          if (_context.Chapters == null)
+          if (_context.Tags == null)
           {
               return NotFound();
           }
-            return await _context.Chapters.ToListAsync();
+            return await _context.Tags.ToListAsync();
         }
 
-        // GET: api/Chapters/5
+        // GET: api/Tags/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Chapter>> GetChapter(Guid id)
+        public async Task<ActionResult<Tag>> GetTag(Guid id)
         {
-          if (_context.Chapters == null)
+          if (_context.Tags == null)
           {
               return NotFound();
           }
-            var chapter = await _context.Chapters.FindAsync(id);
+            var tag = await _context.Tags.FindAsync(id);
 
-            if (chapter == null)
+            if (tag == null)
             {
                 return NotFound();
             }
 
-            return chapter;
+            return tag;
         }
 
-        // PUT: api/Chapters/5
+        // PUT: api/Tags/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutChapter(Guid id, Chapter chapter)
+        public async Task<IActionResult> PutTag(Guid id, Tag tag)
         {
-            if (id != chapter.Id)
+            if (id != tag.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(chapter).State = EntityState.Modified;
+            _context.Entry(tag).State = EntityState.Modified;
 
             try
             {
@@ -66,7 +66,7 @@ namespace LearnALot.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ChapterExists(id))
+                if (!TagExists(id))
                 {
                     return NotFound();
                 }
@@ -79,44 +79,44 @@ namespace LearnALot.Controllers
             return NoContent();
         }
 
-        // POST: api/Chapters
+        // POST: api/Tags
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Chapter>> PostChapter(Chapter chapter)
+        public async Task<ActionResult<Tag>> PostTag(Tag tag)
         {
-          if (_context.Chapters == null)
+          if (_context.Tags == null)
           {
-              return Problem("Entity set 'LearnDBContext.Chapters'  is null.");
+              return Problem("Entity set 'LearnDBContext.Tags'  is null.");
           }
-            _context.Chapters.Add(chapter);
+            _context.Tags.Add(tag);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetChapter", new { id = chapter.Id }, chapter);
+            return CreatedAtAction("GetTag", new { id = tag.Id }, tag);
         }
 
-        // DELETE: api/Chapters/5
+        // DELETE: api/Tags/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteChapter(Guid id)
+        public async Task<IActionResult> DeleteTag(Guid id)
         {
-            if (_context.Chapters == null)
+            if (_context.Tags == null)
             {
                 return NotFound();
             }
-            var chapter = await _context.Chapters.FindAsync(id);
-            if (chapter == null)
+            var tag = await _context.Tags.FindAsync(id);
+            if (tag == null)
             {
                 return NotFound();
             }
 
-            _context.Chapters.Remove(chapter);
+            _context.Tags.Remove(tag);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ChapterExists(Guid id)
+        private bool TagExists(Guid id)
         {
-            return (_context.Chapters?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Tags?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

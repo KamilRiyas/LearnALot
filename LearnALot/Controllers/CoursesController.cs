@@ -10,55 +10,55 @@ namespace LearnALot.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ChaptersController : ControllerBase
+    public class CoursesController : ControllerBase
     {
         private readonly LearnDBContext _context;
 
-        public ChaptersController(LearnDBContext context)
+        public CoursesController(LearnDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Chapters
+        // GET: api/Courses
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Chapter>>> GetChapters()
+        public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-          if (_context.Chapters == null)
+          if (_context.Courses == null)
           {
               return NotFound();
           }
-            return await _context.Chapters.ToListAsync();
+            return await _context.Courses.ToListAsync();
         }
 
-        // GET: api/Chapters/5
+        // GET: api/Courses/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Chapter>> GetChapter(Guid id)
+        public async Task<ActionResult<Course>> GetCourse(Guid id)
         {
-          if (_context.Chapters == null)
+          if (_context.Courses == null)
           {
               return NotFound();
           }
-            var chapter = await _context.Chapters.FindAsync(id);
+            var course = await _context.Courses.FindAsync(id);
 
-            if (chapter == null)
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return chapter;
+            return course;
         }
 
-        // PUT: api/Chapters/5
+        // PUT: api/Courses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutChapter(Guid id, Chapter chapter)
+        public async Task<IActionResult> PutCourse(Guid id, Course course)
         {
-            if (id != chapter.Id)
+            if (id != course.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(chapter).State = EntityState.Modified;
+            _context.Entry(course).State = EntityState.Modified;
 
             try
             {
@@ -66,7 +66,7 @@ namespace LearnALot.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ChapterExists(id))
+                if (!CourseExists(id))
                 {
                     return NotFound();
                 }
@@ -79,44 +79,44 @@ namespace LearnALot.Controllers
             return NoContent();
         }
 
-        // POST: api/Chapters
+        // POST: api/Courses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Chapter>> PostChapter(Chapter chapter)
+        public async Task<ActionResult<Course>> PostCourse(Course course)
         {
-          if (_context.Chapters == null)
+          if (_context.Courses == null)
           {
-              return Problem("Entity set 'LearnDBContext.Chapters'  is null.");
+              return Problem("Entity set 'LearnDBContext.Courses'  is null.");
           }
-            _context.Chapters.Add(chapter);
+            _context.Courses.Add(course);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetChapter", new { id = chapter.Id }, chapter);
+            return CreatedAtAction("GetCourse", new { id = course.Id }, course);
         }
 
-        // DELETE: api/Chapters/5
+        // DELETE: api/Courses/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteChapter(Guid id)
+        public async Task<IActionResult> DeleteCourse(Guid id)
         {
-            if (_context.Chapters == null)
+            if (_context.Courses == null)
             {
                 return NotFound();
             }
-            var chapter = await _context.Chapters.FindAsync(id);
-            if (chapter == null)
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null)
             {
                 return NotFound();
             }
 
-            _context.Chapters.Remove(chapter);
+            _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ChapterExists(Guid id)
+        private bool CourseExists(Guid id)
         {
-            return (_context.Chapters?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Courses?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

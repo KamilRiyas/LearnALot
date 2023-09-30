@@ -4,5 +4,7 @@ public class Student
 
     public string? Handle { get; set; }
 
+    public string? Favourite { get; set; }
+
     public ICollection<Enrollment>? Courses { get; set; }
 }
